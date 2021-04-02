@@ -24,7 +24,9 @@
                 <ImageView
                     android:layout_width="100dp"
                     android:layout_height="100dp"
-                    android:src="@drawable/person" />
+                    android:src="@drawable/person"
+                    android:background="@drawable/personal_img"
+                    />
             </LinearLayout>
 
             <!-- inputs  -->
@@ -188,7 +190,7 @@
                     android:layout_weight="1"
 
                     android:popupBackground="#D3D5D3"
-                    android:backgroundTint="@color/white"
+                    android:backgroundTint="@color/colorAccent"
                     android:entries="@array/Country"
                     />
 
@@ -321,7 +323,6 @@
 
 
             </LinearLayout>
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

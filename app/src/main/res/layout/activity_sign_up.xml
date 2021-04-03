@@ -69,7 +69,7 @@
                     android:src="@drawable/usrusr"
                     android:layout_gravity="center"/>
                 <EditText
-                    android:id="@+id/usrusr"
+                    android:id="@+id/userName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Username"
@@ -129,7 +129,7 @@
                         android:src="@drawable/pswd"
                         android:layout_gravity="center"/>
                     <EditText
-                        android:id="@+id/pswrdd"
+                        android:id="@+id/password"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:hint="Password"
@@ -155,7 +155,7 @@
                         android:src="@drawable/pswd"
                         android:layout_gravity="center"/>
                     <EditText
-                        android:id="@+id/pswrdd2"
+                        android:id="@+id/rePassword"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:hint="Re-Password"
@@ -247,7 +247,7 @@
                     android:src="@drawable/phonemob" />
 
                 <EditText
-                    android:id="@+id/mobphone2"
+                    android:id="@+id/mobileNumber"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"

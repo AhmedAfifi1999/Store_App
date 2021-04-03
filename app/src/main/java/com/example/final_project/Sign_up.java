@@ -8,16 +8,20 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import java.text.DateFormat;
 import java.util.Calendar;
 
 public class Sign_up extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
+    public  final String USER_NAME= "user_name";
+    public  final String PASSWORD= "password";
+    public  final String FULL_NAME= "full_name";
 
-    private  TextView tvDate;
+    private  TextView tvDate ;
+    private EditText fullName ,userName ,mail ,password ,rePassword,mobileNumber,address;
     private Button btPickDate , save;
-
     SharedPreferences sp ;
     SharedPreferences.Editor edit;
 
@@ -27,6 +31,7 @@ public class Sign_up extends AppCompatActivity implements DatePickerDialog.OnDat
         setContentView(R.layout.activity_sign_up);
         declare();
 
+
         btPickDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -35,10 +40,18 @@ public class Sign_up extends AppCompatActivity implements DatePickerDialog.OnDat
                 mDatePickerDialogFragment.show(getSupportFragmentManager(), "DATE PICK");
             }
         });
-
+//Save button
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String username=   userName.getText().toString();
+                String pass=   password.getText().toString();
+                String full_name=   fullName.getText().toString();
+
+                edit.putString(USER_NAME,username);
+                edit.putString(PASSWORD,pass);
+                edit.putString(FULL_NAME,full_name);
+
                 Intent login = new Intent(getBaseContext(),Login.class);
                 startActivity(login);
                 finish();
@@ -67,11 +80,21 @@ public class Sign_up extends AppCompatActivity implements DatePickerDialog.OnDat
 
 
     private void declare(){
+        //Edit text
+             //fullName ,userName ,mail ,password ,rePassword,mobileNumber,address;
+        fullName =findViewById(R.id.fullName);
+        userName =findViewById(R.id.userName);
+        mail =findViewById(R.id.mail);
+        password =findViewById(R.id.password);
+        rePassword =findViewById(R.id.rePassword);
+        mobileNumber =findViewById(R.id.mobileNumber);
+        address =findViewById(R.id.address);
+        //TextView
         tvDate = findViewById(R.id.tvDate);
+        //Button
         btPickDate = findViewById(R.id.btPickDate);
         save = findViewById(R.id.save);
-        tvDate = findViewById(R.id.tvDate);
-        btPickDate = findViewById(R.id.btPickDate);
+        //SharedPreference
         sp =getSharedPreferences("user_info",MODE_PRIVATE);
         edit =sp.edit();
 

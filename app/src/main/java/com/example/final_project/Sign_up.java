@@ -47,11 +47,12 @@ public class Sign_up extends AppCompatActivity implements DatePickerDialog.OnDat
                 String username=   userName.getText().toString();
                 String pass=   password.getText().toString();
                 String full_name=   fullName.getText().toString();
-
+// check is empty or null  >>
                 edit.putString(USER_NAME,username);
                 edit.putString(PASSWORD,pass);
                 edit.putString(FULL_NAME,full_name);
-
+                edit.apply();
+                // move to  Login Activity
                 Intent login = new Intent(getBaseContext(),Login.class);
                 startActivity(login);
                 finish();
@@ -62,7 +63,17 @@ public class Sign_up extends AppCompatActivity implements DatePickerDialog.OnDat
 
     }
 
+    public String getUSER_NAME() {
+        return USER_NAME;
+    }
 
+    public String getPASSWORD() {
+        return PASSWORD;
+    }
+
+    public String getFULL_NAME() {
+        return FULL_NAME;
+    }
 
     @Override
     public void onDateSet(android.widget.DatePicker view, int year, int month, int dayOfMonth) {

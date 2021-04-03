@@ -15,29 +15,14 @@ public class Login extends AppCompatActivity   {
     Button register ;
     //Edit Text
     EditText loginUserName, loginPassword;
-
+    private String user_name,full_name,password;
     SharedPreferences sp ;
     SharedPreferences.Editor edit;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        register=findViewById(R.id.register);
-        loginUserName =findViewById(R.id.loginUserName);
-        loginPassword =findViewById(R.id.loginPassword);
-
-        sp =getSharedPreferences("user_info",MODE_PRIVATE);
-        edit =sp.edit();
-        String user_name =sp.getString(new Sign_up().USER_NAME,"0");
-        String full_name =sp.getString(new Sign_up().FULL_NAME,"0");
-        String PASSWORD =sp.getString(new Sign_up().PASSWORD,"0");
-
-        if(user_name.equals("0") ||full_name.equals("0")||PASSWORD.equals("0") ){
-            //do no thing
-        }else{
-            loginUserName.setText(user_name);
-            loginPassword.setText(PASSWORD);
-        }
+        declare();
 
 
         register.setOnClickListener(new View.OnClickListener() {
@@ -48,5 +33,34 @@ public class Login extends AppCompatActivity   {
                 finish();
             }
         });
+
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent Main = new Intent(getBaseContext(),MainActivity.class);
+                startActivity(Main);
+                finish();
+            }
+        });
+    }
+
+    private void declare(){
+
+        register=findViewById(R.id.register);
+        loginUserName =findViewById(R.id.loginUserName);
+        loginPassword =findViewById(R.id.loginPassword);
+
+        sp =getSharedPreferences("user_info",MODE_PRIVATE);
+        edit =sp.edit();
+        user_name =sp.getString(new Sign_up().USER_NAME,"0");
+        full_name =sp.getString(new Sign_up().FULL_NAME,"0");
+        password =sp.getString(new Sign_up().PASSWORD,"0");
+
+        if(user_name.equals("0") ||full_name.equals("0")||password.equals("0") ){
+            //do no thing
+        }else{
+            loginUserName.setText(user_name);
+            loginPassword.setText(password);
+        }
     }
 }

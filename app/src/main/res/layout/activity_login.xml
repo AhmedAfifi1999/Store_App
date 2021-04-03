@@ -7,6 +7,9 @@
     android:background="@drawable/grdnt"
     tools:context=".Login">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,7 +18,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="300dp"
+            android:layout_height="200dp"
             android:gravity="center"
             android:orientation="vertical">
 <TextView
@@ -84,7 +87,9 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center"
-            android:padding="16dp">
+            android:paddingRight="16dp"
+            android:paddingLeft="16dp"
+            android:paddingBottom="3dp">
 
             <Button
                 android:id="@+id/button"
@@ -98,11 +103,54 @@
                 android:text="Login" />
 
         </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:paddingRight="16dp"
+            android:paddingLeft="16dp">
+
+            <Button
+                android:id="@+id/register"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:layout_gravity="center"
+                android:background="@drawable/save_btn"
+                android:text="Register" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="16dp">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                />
+
+            <CheckBox android:id="@+id/checkbox_meat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Remember me ?"
+                android:textColor="@color/white"
+                android:paddingLeft="20dp"
+                android:buttonTint="@color/colorAccent"
+                />
+
+
+
+        </LinearLayout>
 
 
 
     </LinearLayout>
 
-
+    </ScrollView>
 
 </RelativeLayout>

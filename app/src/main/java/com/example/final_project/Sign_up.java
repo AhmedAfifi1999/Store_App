@@ -3,6 +3,8 @@ package com.example.final_project;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -13,25 +15,34 @@ import java.util.Calendar;
 
 public class Sign_up extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
-    TextView tvDate;
-    Button btPickDate;
+    private  TextView tvDate;
+    private Button btPickDate , save;
 
+    SharedPreferences sp ;
+    SharedPreferences.Editor edit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
-        tvDate = findViewById(R.id.tvDate);
-        btPickDate = findViewById(R.id.btPickDate);
-        tvDate = findViewById(R.id.tvDate);
-        btPickDate = findViewById(R.id.btPickDate);
+        declare();
+
         btPickDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Please note that use your package name here
                 com.example.final_project.DatePicker mDatePickerDialogFragment;
                 mDatePickerDialogFragment = new com.example.final_project.DatePicker();
                 mDatePickerDialogFragment.show(getSupportFragmentManager(), "DATE PICK");
+            }
+        });
+
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent login = new Intent(getBaseContext(),Login.class);
+                startActivity(login);
+                finish();
+
             }
         });
 
@@ -52,5 +63,17 @@ public class Sign_up extends AppCompatActivity implements DatePickerDialog.OnDat
         String selectedDate = DateFormat.getDateInstance(DateFormat.FULL).format(mCalender.getTime());
         // Set the textview to the selectedDate String
         tvDate.setText(selectedDate);
+    }
+
+
+    private void declare(){
+        tvDate = findViewById(R.id.tvDate);
+        btPickDate = findViewById(R.id.btPickDate);
+        save = findViewById(R.id.save);
+        tvDate = findViewById(R.id.tvDate);
+        btPickDate = findViewById(R.id.btPickDate);
+        sp =getSharedPreferences("user_info",MODE_PRIVATE);
+        edit =sp.edit();
+
     }
 }

@@ -93,7 +93,7 @@
             android:paddingBottom="3dp">
 
             <Button
-                android:id="@+id/button"
+                android:id="@+id/login2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -135,7 +135,7 @@
                 android:layout_height="20dp"
                 />
 
-            <CheckBox android:id="@+id/checkbox_meat"
+            <CheckBox android:id="@+id/remember_me"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Remember me ?"

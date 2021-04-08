@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -15,13 +16,15 @@ import java.text.DateFormat;
 import java.util.Calendar;
 
 public class Sign_up extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
-    public  final String USER_NAME= "user_name";
-    public  final String PASSWORD= "password";
-    public  final String FULL_NAME= "full_name";
+    public static final String USER_NAME= "user_name";
+    public static  final String PASSWORD= "password";
+    public static final String FULL_NAME= "full_name";
 
     private  TextView tvDate ;
     private EditText fullName ,userName ,mail ,password ,rePassword,mobileNumber,address;
     private Button btPickDate , save;
+    private CheckBox isAdministrator;
+
     SharedPreferences sp ;
     SharedPreferences.Editor edit;
 

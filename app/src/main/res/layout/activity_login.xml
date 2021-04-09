@@ -11,146 +11,151 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:gravity="center"
+            android:layout_height="match_parent"
             android:orientation="vertical">
-<TextView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:text="welcome"
-    android:gravity="center"
-    android:textColor="@color/white"
-    android:textSize="40dp"
-    android:textStyle="bold"
-    />
 
-        </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:gravity="center"
+                android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="16dp">
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/usrusr"
-                android:layout_gravity="center"/>
-            <EditText
-                android:id="@+id/loginUserName"
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="welcome"
+                    android:textColor="@color/white"
+                    android:textSize="40dp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Username"
-                android:textColorHint="@color/hint_txt_color"
-                android:layout_marginLeft="15dp"
-                android:background="#00000000"
-                android:letterSpacing="0.1"
-                android:textSize="16dp"
-                android:inputType="text"
-                android:textColor="#fff"
+                android:orientation="horizontal"
+                android:padding="16dp">
 
-                />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="16dp">
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/pswd"
-                android:layout_gravity="center"/>
-            <EditText
-                android:id="@+id/loginPassword"
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/usrusr" />
+
+                <EditText
+                    android:id="@+id/loginUserName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:background="#00000000"
+                    android:hint="Username"
+                    android:inputType="text"
+                    android:letterSpacing="0.1"
+                    android:textColor="#fff"
+                    android:textColorHint="@color/hint_txt_color"
+                    android:textSize="16dp"
+
+                    />
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Password"
-                android:textColorHint="@color/hint_txt_color"
-                android:layout_marginLeft="15dp"
-                android:background="#00000000"
-                android:inputType="textPassword"
-                android:letterSpacing="0.1"
-                android:textSize="16dp"
-                android:textColor="#fff"
+                android:orientation="horizontal"
+                android:padding="16dp">
 
-                />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:paddingRight="16dp"
-            android:paddingLeft="16dp"
-            android:paddingBottom="3dp">
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/pswd" />
 
-            <Button
-                android:id="@+id/login2"
-                android:layout_width="wrap_content"
+                <EditText
+                    android:id="@+id/loginPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:background="#00000000"
+                    android:hint="Password"
+                    android:inputType="textPassword"
+                    android:letterSpacing="0.1"
+                    android:textColor="#fff"
+                    android:textColorHint="@color/hint_txt_color"
+                    android:textSize="16dp"
+
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textColor="@color/white"
-                android:textStyle="bold"
-                android:layout_gravity="center"
-                android:background="@drawable/save_btn"
-                android:text="Login" />
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:paddingBottom="3dp">
 
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:paddingRight="16dp"
-            android:paddingLeft="16dp">
+                <Button
+                    android:id="@+id/login2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:background="@drawable/save_btn"
+                    android:text="Login"
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
 
-            <Button
-                android:id="@+id/register"
-                android:layout_width="wrap_content"
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textColor="@color/white"
-                android:textStyle="bold"
-                android:layout_gravity="center"
-                android:background="@drawable/save_btn"
-                android:text="Register" />
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp">
 
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="16dp">
+                <Button
+                    android:id="@+id/register"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:background="@drawable/save_btn"
+                    android:text="Register"
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
 
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                />
+            </LinearLayout>
 
-            <CheckBox android:id="@+id/remember_me"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Remember me ?"
-                android:textColor="@color/white"
-                android:paddingLeft="20dp"
-                android:buttonTint="@color/colorAccent"
-                />
+                android:orientation="horizontal"
+                android:padding="16dp">
 
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp" />
+
+                <CheckBox
+                    android:id="@+id/remember_me"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/colorAccent"
+                    android:paddingLeft="20dp"
+                    android:text="Remember me ?"
+                    android:textColor="@color/white" />
+
+
+            </LinearLayout>
 
 
         </LinearLayout>
-
-
-
-    </LinearLayout>
 
     </ScrollView>
 

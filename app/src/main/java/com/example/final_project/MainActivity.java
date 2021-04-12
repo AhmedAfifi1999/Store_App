@@ -85,6 +85,6 @@ public class MainActivity extends AppCompatActivity implements ProductAdapter.on
 
     @Override
     public void onClickItemSelected(Product product) {
-        Toast.makeText(this, product.getProductTitle(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, product.getTitle(), Toast.LENGTH_SHORT).show();
     }
 }

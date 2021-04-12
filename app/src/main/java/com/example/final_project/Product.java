@@ -3,18 +3,18 @@ package com.example.final_project;
 public class Product {
 
     private int id;
-    private String productTitle;
+    private String title;
     private String description;
     private double price;
-    private String URLImage;
+    private String image;
     private boolean cash;
 
-    public Product(int id, String productTitle, String description, double price, String URLImage, boolean cash) {
+    public Product(int id, String title, String description, double price, String image, boolean cash) {
         this.id = id;
-        this.productTitle = productTitle;
+        this.title = title;
         this.description = description;
         this.price = price;
-        this.URLImage = URLImage;
+        this.image = image;
         this.cash = cash;
     }
 
@@ -26,12 +26,12 @@ public class Product {
         this.id = id;
     }
 
-    public String getProductTitle() {
-        return productTitle;
+    public String getTitle() {
+        return title;
     }
 
-    public void setProductTitle(String productTitle) {
-        this.productTitle = productTitle;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getDescription() {
@@ -50,12 +50,12 @@ public class Product {
         this.price = price;
     }
 
-    public String getURLImage() {
-        return URLImage;
+    public String getImage() {
+        return image;
     }
 
-    public void setURLImage(String URLImage) {
-        this.URLImage = URLImage;
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public boolean isCash() {

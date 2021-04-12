@@ -36,10 +36,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
+        android:inputType="number"
         android:hint="Item Price"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/product_name" />
+
+
 
     <EditText
         android:id="@+id/product_description"
@@ -64,14 +67,14 @@
         app:layout_constraintTop_toBottomOf="@+id/product_description">
 
         <RadioButton
-            android:id="@+id/radio0"
+            android:id="@+id/installment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="true"
             android:text="In installment" />
 
         <RadioButton
-            android:id="@+id/radio1"
+            android:id="@+id/cash"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Cash" />
@@ -79,7 +82,7 @@
     </RadioGroup>
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/save_product"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"

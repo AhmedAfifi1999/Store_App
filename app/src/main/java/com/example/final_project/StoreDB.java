@@ -30,11 +30,8 @@ public class StoreDB extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         //when Create DB  onetime Just
-
         db.execSQL("CREATE TABLE IF NOT EXISTS " + PRODUCT_TB_NAME + " (" + PRODUCT_id + " INTEGER PRIMARY KEY AUTOINCREMENT , "
                 + PRODUCT_TITLE + " Text , " + PRODUCT_DESCRIPTION + " text , " + PRODUCT_PRICE + " REAL , " + PRODUCT_IMAGE_PATH + " text ," + PRODUCT_IS_CASH + "  integer)");
-
-
     }
 
     @Override
@@ -52,7 +49,6 @@ public class StoreDB extends SQLiteOpenHelper {
         values.put(PRODUCT_PRICE, product.getPrice());
         values.put(PRODUCT_IMAGE_PATH, product.getImage());
         values.put(PRODUCT_IS_CASH, product.isCash());
-
         long result = db.insert(PRODUCT_TB_NAME, null, values);
         return result != -1;
     }
@@ -88,7 +84,7 @@ public class StoreDB extends SQLiteOpenHelper {
         ArrayList<Product> products = new ArrayList<>();
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.rawQuery("select * from " + PRODUCT_TB_NAME, null);
-        if (cursor!= null && cursor.moveToFirst()) {
+        if (cursor != null && cursor.moveToFirst()) {
 
             do {
                 int id = cursor.getInt(cursor.getColumnIndex(PRODUCT_id));//0

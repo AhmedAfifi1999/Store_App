@@ -80,4 +80,9 @@ public class Product {
     public void setCash(boolean cash) {
         this.cash = cash;
     }
+
+    public static class database {
+        public static final String TABLE_NAME = "product";
+
+    }
 }

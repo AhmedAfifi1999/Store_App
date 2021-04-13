@@ -12,79 +12,38 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements ProductAdapter.onClickItem {
     private RecyclerView recyclerView;
+    private StoreDB db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        db=new StoreDB(this);
         recyclerView = findViewById(R.id.rv_product);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
         recyclerView.setItemViewCacheSize(20);
         List<Product> product = new ArrayList<>();
-        product.add(new Product(
+        List<Product> product3;
+
+        product3 =db.getAllProducts();
+    /*    product.add(new Product(
                 1,
                 "test1",
                 "test1 test1 test1",
                 50.5,
                 "",
                 true
-        ));
-        product.add(new Product(
-                1,
-                "test2",
-                "test1 test1 test1",
-                50.5,
-                "",
-                true
-        ));
-        product.add(new Product(
-                1,
-                "test3",
-                "test1 test1 test1",
-                50.5,
-                "",
-                true
-        ));
-        product.add(new Product(
-                1,
-                "test4",
-                "test1 test1 test1",
-                50.5,
-                "",
-                true
-        ));
-        product.add(new Product(
-                1,
-                "test2",
-                "test1 test1 test1",
-                50.5,
-                "",
-                true
-        ));
-        product.add(new Product(
-                1,
-                "test3",
-                "test1 test1 test1",
-                50.5,
-                "",
-                true
-        ));
-        product.add(new Product(
-                1,
-                "test4",
-                "test1 test1 test1",
-                50.5,
-                "",
-                true
-        ));
-        ProductAdapter productAdapter = new ProductAdapter(product, this, this);
+        ));*/
+
+        ProductAdapter productAdapter = new ProductAdapter(product3, this, this);
         recyclerView.setAdapter(productAdapter);
 
     }
 
     @Override
     public void onClickItemSelected(Product product) {
+
         Toast.makeText(this, product.getTitle(), Toast.LENGTH_SHORT).show();
     }
 }

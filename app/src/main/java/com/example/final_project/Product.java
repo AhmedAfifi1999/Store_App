@@ -18,6 +18,21 @@ public class Product {
         this.cash = cash;
     }
 
+    public Product(int id, String title, String description, double price, boolean cash) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.price = price;
+        this.cash = cash;
+    }
+
+    public Product(String title, String description, double price, boolean cash) {
+        this.title = title;
+        this.description = description;
+        this.price = price;
+        this.cash = cash;
+    }
+
     public int getId() {
         return id;
     }

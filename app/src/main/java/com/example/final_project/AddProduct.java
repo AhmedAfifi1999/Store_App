@@ -40,6 +40,7 @@ public class AddProduct extends AppCompatActivity {
                 double product_price = Double.parseDouble(ProductPrice.getText().toString());
                 String product_description = ProductDescription.getText().toString();
                 boolean isCash = Cash.isChecked();
+                //check if he insert using TextUtil
                 Product product = new Product(product_title, product_description, product_price, isCash);
                 boolean isSuccess = db.insertProduct(product);
                 Toast.makeText(AddProduct.this, "this insert is "+isSuccess, Toast.LENGTH_SHORT).show();

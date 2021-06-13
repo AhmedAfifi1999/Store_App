@@ -1,2 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="declare_total_price_is_what">مجموعى اسعار المنتجات :</string>
+    <string name="product_title_txt">عنوان المنتج</string>
+    <string name="btn_send_buy_product">شراء</string>
+    <string name="product_detail">تفاصيل المنتج</string>
+    <string name="number_of_product">عدد المنتجات</string>
+    <string name="product_price">سعر المنتج :</string>
+    <!-- -->
+
+    <string name="change_password">تغير كلمة المرور</string>
+    <string name="old_password">كلمة المرور القديمة</string>
+    <string name="new_password">كلمة المرور الجديدة</string>
+    <string name="re_new_password">تاكيد كلمة المرور</string>
+    <string name="save">حفظ</string>
+    <!-- -->
+    <string name="welcome">اهلا وسهلا بكم</string>
+    <string name="hint_username">اسم المستخدم</string>
+    <string name="hint_password">كلمة المرور</string>
+    <string name="login">تسجيل الدخول</string>
+    <string name="register">التسجيل</string>
+    <string name="remember_me">تذكرني ؟</string>
+    <!-- -->
+    <string name="search">البحث</string>
+    <!-- -->
+    <string name="show_all_purchase">رؤية جميع المشتريات</string>
+    <string name="show_last_purchase">رؤية اخر المشتريات</string>
+    <string name="clear_all_purchase">حذف جميع المشتريات</string>
+    <string name="add_new_item">اضافة منتج جديد</string>
+    <!-- -->
+    <string name="hint_full_name">الاسم كامل</string>
+    <string name="hint_email_address">عنوان الايميل</string>
+    <string name="mobile_number">رقم الهاتف</string>
+    <string name="address">العنوان</string>
+    <string name="male">ذكر</string>
+    <string name="female">انثى</string>
+    <string name="is_administrator">تسجيل كمسؤول</string>
+    <string name="quantity_of_product">الكمية</string>
+    <string name="date">التاريخ :</string>
+    <string name="total">المجموع :</string>
+    <string name="price">السعر </string>
+    <string name="product_title">عنوان المنتج</string>
+    <string name="description">الوصف</string>
+    <string name="settings">الاعدادات</string>
+    <string name="logout">تسجيل الخروج</string>
+    <string name="installment">تقسيط</string>
+    <string name="cash">كاش</string>
+
+
+</resources>

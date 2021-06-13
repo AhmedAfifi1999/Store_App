@@ -1,4 +1,4 @@
-package com.example.final_project;
+package com.example.final_project.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,6 +11,8 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.final_project.R;
+
 public class Login extends AppCompatActivity {
     private Button register, login;
     private CheckBox remember_me;
@@ -21,9 +23,11 @@ public class Login extends AppCompatActivity {
     SharedPreferences sp;
     SharedPreferences.Editor edit;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_login);
         Toast.makeText(this, "isRemember :" + isRemember, Toast.LENGTH_SHORT).show();
         declare();

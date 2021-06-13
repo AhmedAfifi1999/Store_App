@@ -1,4 +1,4 @@
-package com.example.final_project;
+package com.example.final_project.database;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import com.example.final_project.model.Product;
 
 import java.util.ArrayList;
 
@@ -32,13 +34,17 @@ public class StoreDB extends SQLiteOpenHelper {
         //when Create DB  onetime Just
         db.execSQL("CREATE TABLE IF NOT EXISTS " + PRODUCT_TB_NAME + " (" + PRODUCT_id + " INTEGER PRIMARY KEY AUTOINCREMENT , "
                 + PRODUCT_TITLE + " Text , " + PRODUCT_DESCRIPTION + " text , " + PRODUCT_PRICE + " REAL , " + PRODUCT_IMAGE_PATH + " text ," + PRODUCT_IS_CASH + "  integer)");
+
+        PurchaseTable.createPurchaseTable(db);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // on update database
         //Drop table >>
-        //db.execSQL("drop table if EXISTS product");
+        db.execSQL("drop table if EXISTS "+PRODUCT_TB_NAME);
+        PurchaseTable.updatePurchaseTable(db);
+        onCreate(db);
     }
 
     public boolean insertProduct(Product product) {
@@ -103,5 +109,30 @@ public class StoreDB extends SQLiteOpenHelper {
 
         return products;
     }
+
+    public ArrayList<Product> getSearchedProducts(String productTitle){
+        ArrayList<Product> products = new ArrayList<>();
+        SQLiteDatabase db = getReadableDatabase();
+        String arg [] ={String.valueOf("%"+productTitle+"%")};;
+        Cursor cursor = db.rawQuery("select * from " + PRODUCT_TB_NAME+" where "+PRODUCT_TITLE +" Like  ?", arg);
+
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                int id = cursor.getInt(cursor.getColumnIndex(PRODUCT_id));//0
+                String title = cursor.getString(cursor.getColumnIndex(PRODUCT_TITLE));//1
+                String description = cursor.getString(cursor.getColumnIndex(PRODUCT_DESCRIPTION));//2
+                double price = cursor.getDouble(cursor.getColumnIndex(PRODUCT_PRICE));//3
+                String image = cursor.getString(cursor.getColumnIndex(PRODUCT_IMAGE_PATH));//4
+                int cash = cursor.getInt(cursor.getColumnIndex(PRODUCT_IS_CASH));//5
+
+                Product product = new Product(id, title, description, price, image, (cash == 1) ? true : false);
+                products.add(product);
+
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+
+        return products;    }
+
 
 }

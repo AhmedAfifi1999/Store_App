@@ -1,6 +1,46 @@
 <resources>
     <string name="app_name">Store</string>
     <string name="but_save">save</string>
+    <string name="declare_total_price_is_what">Total product price :</string>
+    <string name="product_title_txt">Product Title</string>
+    <string name="btn_send_buy_product">Buy</string>
+    <string name="product_detail">Prudect detail</string>
+    <string name="number_of_product">Number Of Product</string>
+    <string name="product_price">product price :</string>
+    <string name="change_password">Change Password</string>
+    <string name="old_password">old password</string>
+    <string name="new_password">New password</string>
+    <string name="re_new_password">Re_New password</string>
+    <string name="save">Save</string>
+    <string name="welcome">welcome</string>
+    <string name="hint_username">Username</string>
+    <string name="hint_password">Password</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="remember_me">Remember me ?</string>
+    <string name="search">search</string>
+    <string name="show_all_purchase">show all purchase</string>
+    <string name="show_last_purchase">show last purchase</string>
+    <string name="clear_all_purchase">clear all purchase</string>
+    <string name="add_new_item">Add new item</string>
+    <string name="hint_full_name">Full Name</string>
+    <string name="hint_email_address">Email Address</string>
+    <string name="mobile_number">Mobile Number</string>
+    <string name="address">Address</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="is_administrator">Is Administrator</string>
+    <!-- -->
+    <string name="quantity_of_product">Quantity</string>
+    <string name="date">Date</string>
+    <string name="total">Total</string>
+    <string name="price">Price</string>
+    <string name="product_title">Product Title</string>
+    <string name="description">Description</string>
+    <string name="settings">Settings</string>
+    <string name="logout">Logout</string>
+    <string name="installment">installment</string>
+    <string name="cash">cash</string>
 
     <string-array name="Country">
         <item>Hint...</item>

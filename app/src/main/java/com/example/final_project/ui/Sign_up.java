@@ -1,34 +1,39 @@
-package com.example.final_project;
+package com.example.final_project.ui;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import android.Manifest;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
+
+import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
+import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
+
+import android.os.SystemClock;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.Magnifier;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.File;
+import com.example.final_project.R;
+import com.example.final_project.imageOperation.SaveImage;
+import com.hbb20.CountryCodePicker;
+
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.text.DateFormat;
 import java.util.Calendar;
@@ -48,13 +53,17 @@ public class Sign_up extends AppCompatActivity implements DatePickerDialog.OnDat
     OutputStream outputStream;
 
     private TextView tvDate;
-    private EditText fullName, userName, mail, password, rePassword, mobileNumber, address;
+    private EditText fullName, userName, mail, password, rePassword, emailAddress, address, phoneNumber;
     private Button btPickDate, save;
     private CheckBox isAdministrator;
     CircleImageView signup_img;
 
+    CountryCodePicker ccp;
+
     SharedPreferences sp;
     SharedPreferences.Editor edit;
+    String selected_country_code;
+    Bitmap image;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,13 +73,13 @@ public class Sign_up extends AppCompatActivity implements DatePickerDialog.OnDat
         btPickDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                com.example.final_project.DatePicker mDatePickerDialogFragment;
-                mDatePickerDialogFragment = new com.example.final_project.DatePicker();
+                DatePicker mDatePickerDialogFragment;
+                mDatePickerDialogFragment = new DatePicker();
                 mDatePickerDialogFragment.show(getSupportFragmentManager(), "DATE PICK");
             }
         });
 
-        
+
 //Save button
         save.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,14 +88,17 @@ public class Sign_up extends AppCompatActivity implements DatePickerDialog.OnDat
                 String pass = password.getText().toString();
                 String full_name = fullName.getText().toString();
 
-                storeImage();
-
+                getNumber();
 // check is empty or null  >>
                 edit.putLong(USER_ID, System.currentTimeMillis());
                 edit.putString(USER_NAME, username);
                 edit.putString(PASSWORD, pass);
                 edit.putString(FULL_NAME, full_name);
                 edit.apply();
+
+                SaveImage saveImage = new SaveImage(Sign_up.this);
+               String path = saveImage.saveImageInStorage(image, "Users_Image", username + "_" + SystemClock.currentThreadTimeMillis());
+                Log.d("PATH", "path : "+ path);
 
                 // move to  Login Activity
                 Intent login = new Intent(getBaseContext(), Login.class);
@@ -134,8 +146,10 @@ public class Sign_up extends AppCompatActivity implements DatePickerDialog.OnDat
         mail = findViewById(R.id.mail);
         password = findViewById(R.id.password);
         rePassword = findViewById(R.id.rePassword);
-        mobileNumber = findViewById(R.id.mobileNumber);
+        // emailAddress = findViewById(R.id.Address);
         address = findViewById(R.id.address);
+        phoneNumber = findViewById(R.id.phoneNumber);
+
         //TextView
         tvDate = findViewById(R.id.tvDate);
         //Button
@@ -146,101 +160,79 @@ public class Sign_up extends AppCompatActivity implements DatePickerDialog.OnDat
         edit = sp.edit();
         // image
         signup_img = findViewById(R.id.signUp_Image);
+        ccp = findViewById(R.id.ccp);
 
     }
 
     public void chooseImage(View view) {
-        Toast.makeText(this, "iam here", Toast.LENGTH_SHORT).show();
 
+        getPermission();
+
+    }
+
+    public void openGallery() {
         Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
         startActivityForResult(gallery, PICK_IMAGE);
 
 
     }
 
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && requestCode == PICK_IMAGE) {
-            imageUri = data.getData();
-            signup_img.setImageURI(imageUri);
+            if (data != null) {
+                imageUri = data.getData();
+                //   signup_img.setImageURI(imageUri);
+                try {
+                    InputStream is = getContentResolver().openInputStream(imageUri);
+                    BitmapFactory.Options options = new BitmapFactory.Options();
+                    options.inPreferredConfig = Bitmap.Config.RGB_565;
+                    image = BitmapFactory.decodeStream(is, null, options);
+                    signup_img.setImageBitmap(image);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
 
+            }
 
         }
     }
 
-
-    public void storeImage() {
-        if (ContextCompat.checkSelfPermission(Sign_up.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
-
-            saveImage();
-
-        } else {
-
-            askPermission();
+    private void getPermission() {
+        if (Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+            if (ContextCompat.checkSelfPermission(this, READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED &&
+                    ContextCompat.checkSelfPermission(this, WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, new String[]{READ_EXTERNAL_STORAGE,
+                                WRITE_EXTERNAL_STORAGE},
+                        REQUEST_CODE);
+            } else {
+                openGallery();
+            }
         }
-
     }
 
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (requestCode == REQUEST_CODE) {
-            if (grantResults.length > 0 & grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                saveImage();
-
-            } else {
-
-                Toast.makeText(this, "please provide the REQUIRED permission ", Toast.LENGTH_SHORT).show();
-            }
-
-        }
-
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-    }
-
-    private void askPermission() {
-        ActivityCompat.requestPermissions(Sign_up.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CODE);
-
-    }
-
-    private void saveImage() {
-        File dir = new File(Environment.getDataDirectory(), "saveImage/");
-        Log.d("Image", "saveImage: "+dir);;
-        Toast.makeText(this, "start saveImage ", Toast.LENGTH_SHORT).show();
-
-        if (!dir.exists()) {
-            dir.mkdir();
-            Toast.makeText(this, "make dir ", Toast.LENGTH_SHORT).show();
-
-
-        } else {
-
-            BitmapDrawable bitmapDrawable = (BitmapDrawable) signup_img.getDrawable();
-            Bitmap bitmap = bitmapDrawable.getBitmap();
-            File file = new File(dir, System.currentTimeMillis() + ".jpg"); //change to user id > or same >>
-            try {
-                outputStream = new FileOutputStream(file);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
-           // bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
-            Toast.makeText(this, "success Save", Toast.LENGTH_SHORT).show();
-            try {
-                outputStream.flush();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            try {
-                outputStream.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            ;
-
+        if (grantResults[0] == PackageManager.PERMISSION_GRANTED &&
+                grantResults[1] == PackageManager.PERMISSION_GRANTED &&
+                requestCode == REQUEST_CODE) {
+            openGallery();
         }
+    }
 
+
+
+
+    public void getNumber() {
+
+        String fullNumber = ccp.getFullNumber() + phoneNumber.getText().toString();
+        Toast.makeText(this, "Full Number is " + fullNumber, Toast.LENGTH_SHORT).show();
 
     }
+
 
 }

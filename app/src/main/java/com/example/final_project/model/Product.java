@@ -1,4 +1,6 @@
-package com.example.final_project;
+package com.example.final_project.model;
+
+import android.media.Image;
 
 public class Product {
 
@@ -9,8 +11,17 @@ public class Product {
     private String image;
     private boolean cash;
 
+
     public Product(int id, String title, String description, double price, String image, boolean cash) {
         this.id = id;
+        this.title = title;
+        this.description = description;
+        this.price = price;
+        this.image = image;
+        this.cash = cash;
+    }
+
+    public Product(String title, String description, double price, String image, boolean cash) {
         this.title = title;
         this.description = description;
         this.price = price;

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -12,6 +13,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.final_project.R;
+import com.google.android.material.textfield.TextInputLayout;
 
 public class Login extends AppCompatActivity {
     private Button register, login;
@@ -22,6 +24,7 @@ public class Login extends AppCompatActivity {
     private boolean isRemember;
     SharedPreferences sp;
     SharedPreferences.Editor edit;
+    private TextInputLayout usernameLayout, passwordLayout;
 
 
     @Override
@@ -43,17 +46,25 @@ public class Login extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (user_name.equals(loginUserName.getText().toString()) && loginPassword.getText().toString().equals(password)) {
-                    if (remember_me.isChecked()) {
-                        edit.putBoolean(IS_REMEMBERD, true);
-                        edit.apply();
-                    }
-                    Intent Main = new Intent(getBaseContext(), MainActivity.class);
-                    startActivity(Main);
-                    finish();
-                } else {
-                    Toast.makeText(Login.this, "Error", Toast.LENGTH_SHORT).show();
 
+                String loginUsertxt = loginUserName.getText().toString();
+                String loginPasswordtxt = loginPassword.getText().toString();
+
+                boolean check = checkValidation(loginUsertxt, loginPasswordtxt);
+                if (check) {
+                    if (user_name.equals(loginUsertxt) && loginPasswordtxt.equals(password)) {
+                        if (remember_me.isChecked()) {
+
+                            edit.putBoolean(IS_REMEMBERD, true);
+                            edit.apply();
+                        }
+                        Intent Main = new Intent(getBaseContext(), MainActivity.class);
+                        startActivity(Main);
+                        finish();
+                    } else {
+                        Toast.makeText(Login.this, " error Wrong UserName or password", Toast.LENGTH_SHORT).show();
+
+                    }
                 }
             }
         });
@@ -65,6 +76,8 @@ public class Login extends AppCompatActivity {
         loginUserName = findViewById(R.id.loginUserName);
         loginPassword = findViewById(R.id.loginPassword);
         remember_me = findViewById(R.id.remember_me);
+        usernameLayout = findViewById(R.id.login_username_layout);
+        passwordLayout = findViewById(R.id.login_password_layout);
         sp = getSharedPreferences("user_info", MODE_PRIVATE);
         edit = sp.edit();
         user_name = sp.getString(Sign_up.USER_NAME, "0");
@@ -78,7 +91,7 @@ public class Login extends AppCompatActivity {
     }
 
     private void isChecked() {
-        Toast.makeText(Login.this, "remember is :"+isRemember, Toast.LENGTH_SHORT).show();
+        Toast.makeText(Login.this, "remember is :" + isRemember, Toast.LENGTH_SHORT).show();
 
         if (isRemember) {
             Intent MainActivity = new Intent(getBaseContext(), MainActivity.class);
@@ -86,4 +99,32 @@ public class Login extends AppCompatActivity {
             finish();
         }
     }
+
+    private boolean checkValidation(String userName, String password) {
+
+        boolean usernameF = false, passwordf = false;
+        if (!TextUtils.isEmpty(userName)) {
+            usernameLayout.setErrorEnabled(false);
+            usernameF = true;
+
+        } else {
+            usernameLayout.setError("Input required");
+
+            usernameLayout.setErrorEnabled(true);
+
+        }
+        if (!TextUtils.isEmpty(password)) {
+            passwordLayout.setErrorEnabled(false);
+            passwordf = true;
+        } else {
+            passwordLayout.setError("Input required");
+
+            passwordLayout.setErrorEnabled(true);
+
+
+        }
+
+        return usernameF && passwordf;
+    }
 }
+

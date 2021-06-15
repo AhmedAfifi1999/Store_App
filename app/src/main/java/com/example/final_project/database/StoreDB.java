@@ -104,6 +104,7 @@ public class StoreDB extends SQLiteOpenHelper {
                 products.add(product);
 
             } while (cursor.moveToNext());
+
         }
         cursor.close();
 

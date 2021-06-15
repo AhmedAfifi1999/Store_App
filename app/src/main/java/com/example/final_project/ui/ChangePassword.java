@@ -2,6 +2,7 @@ package com.example.final_project.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -44,7 +45,7 @@ public class ChangePassword extends AppCompatActivity {
                 String newPass = newPassword.getText().toString();
                 Toast.makeText(this, "newPass :" + newPass, Toast.LENGTH_SHORT).show();
                 edit.putString(Sign_up.PASSWORD, newPass);
-              String  password_get = sp.getString(Sign_up.PASSWORD, "0");
+                String password_get = sp.getString(Sign_up.PASSWORD, "0");
 
                 Toast.makeText(this, "newPass :" + password_get, Toast.LENGTH_SHORT).show();
 
@@ -53,6 +54,7 @@ public class ChangePassword extends AppCompatActivity {
 
                 errorMsg.setTextColor(Color.GREEN);
                 errorMsg.setText("success change password");
+                startActivity(new Intent(this, SettingActivity.class));
 
             } else {
                 errorMsg.setTextColor(Color.RED);
@@ -63,5 +65,6 @@ public class ChangePassword extends AppCompatActivity {
             errorMsg.setText("the old password is wrong");
 
         }
+
     }
 }

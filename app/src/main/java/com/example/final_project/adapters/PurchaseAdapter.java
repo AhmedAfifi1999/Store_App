@@ -2,6 +2,7 @@ package com.example.final_project.adapters;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -60,18 +61,23 @@ public class PurchaseAdapter extends RecyclerView.Adapter<PurchaseAdapter.Purcha
         PurchaseTable purchaseTable = new PurchaseTable(context);
 
         Product temp = purchaseTable.getProduct(purchase);
-        holder.productDate.setText(purchase.getDate());
-        holder.productTitle.setText(temp.getTitle());
-        holder.productPrice.setText(temp.getPrice() + "");
-        holder.totalPrice.setText(temp.getPrice() * purchase.getQuantity() + "");
-        holder.productQuantity.setText(purchase.getQuantity() + "");
-        holder.productIsCash.setText(temp.isCash() ? cashSting : installmentString);
-        if (temp.getImage() != null || !temp.getImage().isEmpty()) {
-            imageBitMap = image.loadImageFromStorage(temp.getImage());
-            //holder.productImage.setImageURI(Uri.parse(product.getImage()));
-            holder.productImage.setImageBitmap(imageBitMap);
-        }
+        if (temp != null) {
+            holder.productDate.setText(purchase.getDate());
+            holder.productTitle.setText(temp.getTitle());
+            holder.productPrice.setText(temp.getPrice() + "");
+            holder.totalPrice.setText(temp.getPrice() * purchase.getQuantity() + "");
+            holder.productQuantity.setText(purchase.getQuantity() + "");
+            holder.productIsCash.setText(temp.isCash() ? cashSting : installmentString);
+            if (temp.getImage() != null || !temp.getImage().isEmpty()) {
+                imageBitMap = image.loadImageFromStorage(temp.getImage());
+                //holder.productImage.setImageURI(Uri.parse(product.getImage()));
+                holder.productImage.setImageBitmap(imageBitMap);
+            } else {
+                holder.productImage.setImageResource(R.drawable.ibytes);
 
+
+            }
+        }
         // holder.productID.setText(purchase.getProduct_id() + "");
         //   holder.productQuantity.setText(purchase.getQuantity()+"");
         // Glide.with(context).load("https://realfood.tesco.com/media/images/Burger-31LGH-a296a356-020c-4969-86e8-d8c26139f83f-0-1400x919.jpg").into(holder.productImage);

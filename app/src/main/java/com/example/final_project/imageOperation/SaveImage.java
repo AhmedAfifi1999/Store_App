@@ -48,7 +48,6 @@ public class SaveImage {
     }
 
     public Bitmap loadImageFromStorage(String path) {
-        System.out.println("path : " + path);
         if (path != null && !path.equals("")) {
             try {
                 File f = new File(path);

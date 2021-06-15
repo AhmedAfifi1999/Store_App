@@ -115,7 +115,6 @@ public class PurchaseTable extends StoreDB {
         int i = 0;
         if (cursor != null && cursor.moveToNext()) {
 
-
             i++;
             int id = cursor.getInt(cursor.getColumnIndex(PRODUCT_id));//0
             String title = cursor.getString(cursor.getColumnIndex(PRODUCT_TITLE));//1
@@ -130,7 +129,7 @@ public class PurchaseTable extends StoreDB {
         }
         cursor.close();
 
-        Log.d("Product", "getProduct: " + product.getTitle());
+//
 
 
         return product;
@@ -138,6 +137,10 @@ public class PurchaseTable extends StoreDB {
 
     public void deleteAllPurchase() {
         SQLiteDatabase db = getWritableDatabase();
+        //db.execSQL("drop table "+ PURCHASE_TB_NAME);
         db.execSQL("delete from "+ PURCHASE_TB_NAME);
+
+         db.close();
+
     }
 }

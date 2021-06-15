@@ -20,6 +20,7 @@ import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
 import android.os.SystemClock;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -30,6 +31,7 @@ import android.widget.Toast;
 
 import com.example.final_project.R;
 import com.example.final_project.imageOperation.SaveImage;
+import com.google.android.material.textfield.TextInputLayout;
 import com.hbb20.CountryCodePicker;
 
 import java.io.FileNotFoundException;
@@ -45,6 +47,8 @@ public class Sign_up extends AppCompatActivity implements DatePickerDialog.OnDat
     public static final String PASSWORD = "password";
     public static final String FULL_NAME = "full_name";
     public static final String USER_ID = "user_id";
+    public static final String IS_ADMIN = "is_admin";
+
     private static final int PICK_IMAGE = 100;
     private static final int REQUEST_CODE = 100;
 
@@ -53,10 +57,16 @@ public class Sign_up extends AppCompatActivity implements DatePickerDialog.OnDat
     OutputStream outputStream;
 
     private TextView tvDate;
-    private EditText fullName, userName, mail, password, rePassword, emailAddress, address, phoneNumber;
+    private EditText fullName, userName, email, password, rePassword, address, phoneNumber;
     private Button btPickDate, save;
     private CheckBox isAdministrator;
     CircleImageView signup_img;
+    TextInputLayout layoutPassword;
+    TextInputLayout layoutRePassword;
+    TextInputLayout layoutFullName;
+    TextInputLayout layoutUserName;
+    TextInputLayout layoutEmail;
+
 
     CountryCodePicker ccp;
 
@@ -78,36 +88,6 @@ public class Sign_up extends AppCompatActivity implements DatePickerDialog.OnDat
                 mDatePickerDialogFragment.show(getSupportFragmentManager(), "DATE PICK");
             }
         });
-
-
-//Save button
-        save.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String username = userName.getText().toString();
-                String pass = password.getText().toString();
-                String full_name = fullName.getText().toString();
-
-                getNumber();
-// check is empty or null  >>
-                edit.putLong(USER_ID, System.currentTimeMillis());
-                edit.putString(USER_NAME, username);
-                edit.putString(PASSWORD, pass);
-                edit.putString(FULL_NAME, full_name);
-                edit.apply();
-
-                SaveImage saveImage = new SaveImage(Sign_up.this);
-               String path = saveImage.saveImageInStorage(image, "Users_Image", username + "_" + SystemClock.currentThreadTimeMillis());
-                Log.d("PATH", "path : "+ path);
-
-                // move to  Login Activity
-                Intent login = new Intent(getBaseContext(), Login.class);
-                startActivity(login);
-                finish();
-
-            }
-        });
-
 
     }
 
@@ -143,18 +123,24 @@ public class Sign_up extends AppCompatActivity implements DatePickerDialog.OnDat
         //fullName ,userName ,mail ,password ,rePassword,mobileNumber,address;
         fullName = findViewById(R.id.fullName);
         userName = findViewById(R.id.userName);
-        mail = findViewById(R.id.mail);
+        email = findViewById(R.id.mail);
         password = findViewById(R.id.password);
         rePassword = findViewById(R.id.rePassword);
         // emailAddress = findViewById(R.id.Address);
         address = findViewById(R.id.address);
         phoneNumber = findViewById(R.id.phoneNumber);
-
+        ///--
+        layoutPassword = findViewById(R.id.signUp_password_layout);
+        layoutRePassword = findViewById(R.id.signUp_rePassword_layout);
+        layoutFullName = findViewById(R.id.signUp_fullName_layout);
+        layoutUserName = findViewById(R.id.signUp_UserName_layout);
+        layoutEmail = findViewById(R.id.signUp_email_layout);
         //TextView
         tvDate = findViewById(R.id.tvDate);
         //Button
         btPickDate = findViewById(R.id.btPickDate);
         save = findViewById(R.id.save);
+        isAdministrator = findViewById(R.id.checkbox_meat);
         //SharedPreference
         sp = getSharedPreferences("user_info", MODE_PRIVATE);
         edit = sp.edit();
@@ -225,8 +211,6 @@ public class Sign_up extends AppCompatActivity implements DatePickerDialog.OnDat
     }
 
 
-
-
     public void getNumber() {
 
         String fullNumber = ccp.getFullNumber() + phoneNumber.getText().toString();
@@ -234,5 +218,111 @@ public class Sign_up extends AppCompatActivity implements DatePickerDialog.OnDat
 
     }
 
+    public boolean checkPassword() {
 
+        String pass = password.getText().toString();
+        String rePass = rePassword.getText().toString();
+        if (!TextUtils.isEmpty(pass)) {
+            layoutPassword.setErrorEnabled(false);
+
+
+        } else {
+            layoutPassword.setError("Input required");
+            layoutPassword.setErrorEnabled(true);
+        }
+
+        if (!TextUtils.isEmpty(rePass)) {
+            layoutRePassword.setErrorEnabled(false);
+
+
+        } else {
+
+            layoutRePassword.setError("Input required");
+            layoutRePassword.setErrorEnabled(true);
+        }
+
+        if (!TextUtils.isEmpty(rePass) & !TextUtils.isEmpty(pass)) {
+            if (pass.equals(rePass)) {
+
+                return true;
+            } else {
+
+                layoutRePassword.setError("Pass not Equal");
+                layoutRePassword.setErrorEnabled(true);
+                layoutPassword.setError("Pass not Equal");
+                layoutPassword.setErrorEnabled(true);
+
+            }
+        }
+
+        return false;
+    }
+
+
+    public void save_SignUp(View view) {
+        String emailAddress = email.getText().toString();
+        String username = userName.getText().toString();
+        String pass = password.getText().toString();
+        String full_name = fullName.getText().toString();
+        boolean isAdmin = isAdministrator.isChecked();
+
+        boolean userAndFullNameAndEmail = checkStringValues(full_name, username, emailAddress);
+        boolean a = checkPassword();
+        if (a && userAndFullNameAndEmail) {
+            getNumber();
+// check is empty or null  >>
+            edit.putLong(USER_ID, System.currentTimeMillis());
+            edit.putString(USER_NAME, username);
+            edit.putString(PASSWORD, pass);
+            edit.putBoolean(IS_ADMIN, isAdmin);
+            edit.putString(FULL_NAME, full_name);
+            edit.apply();
+
+            SaveImage saveImage = new SaveImage(Sign_up.this);
+            String path = saveImage.saveImageInStorage(image, "Users_Image", username + "_" + SystemClock.currentThreadTimeMillis());
+            Log.d("PATH", "path : " + path);
+
+            // move to  Login Activity
+            Intent login = new Intent(getBaseContext(), Login.class);
+            startActivity(login);
+            finish();
+        } else {
+
+            Toast.makeText(Sign_up.this, "Error", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+    public boolean checkStringValues(String fullName, String userName, String email) {
+
+        boolean fullNameF = false, userNameF = false, emailF = false;
+
+        if (!TextUtils.isEmpty(fullName)) {
+            fullNameF = true;
+            layoutFullName.setErrorEnabled(false);
+
+        } else {
+            layoutFullName.setError("Input required");
+            layoutFullName.setErrorEnabled(true);
+        }
+        if (!TextUtils.isEmpty(userName)) {
+            userNameF = true;
+            layoutUserName.setErrorEnabled(false);
+
+        } else {
+            layoutUserName.setError("Input required");
+            layoutUserName.setErrorEnabled(true);
+        }
+        if (!TextUtils.isEmpty(email)) {
+            layoutEmail.setErrorEnabled(false);
+
+            emailF = true;
+        } else {
+            layoutEmail.setError("Input required");
+            layoutEmail.setErrorEnabled(true);
+        }
+
+
+        return (emailF & userNameF & fullNameF);
+    }
 }

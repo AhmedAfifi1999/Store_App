@@ -2,6 +2,7 @@ package com.example.final_project.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import com.example.final_project.R;
 import com.example.final_project.database.PurchaseTable;
 import com.example.final_project.imageOperation.SaveImage;
 import com.example.final_project.model.Purchase;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -29,7 +31,7 @@ public class BuyProduct extends AppCompatActivity {
     ImageView image;
     Button buyProductBtn;
     double Price;
-    int num ,Id;
+    int num, Id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,16 +50,16 @@ public class BuyProduct extends AppCompatActivity {
         String Image = productIntent.getStringExtra("Image");
         String Description = productIntent.getStringExtra("Description");
         Price = productIntent.getDoubleExtra("Price", -1);
-         Id = productIntent.getIntExtra("Id", -1);
+        Id = productIntent.getIntExtra("Id", -1);
         Toast.makeText(this, "Price : " + Price, Toast.LENGTH_SHORT).show();
         title.setText(Title);
         productPrice.setText(Price + "$");
         totalProductPrice.setText(Price + "$");
         descriptionProduct.setText(Description);
-        if(Image!=null ||!Image.isEmpty() ){
+        if (Image != null || !Image.isEmpty()) {
             SaveImage imageLoad = new SaveImage(BuyProduct.this);
             Bitmap imageBitMap;
-            imageBitMap =imageLoad.loadImageFromStorage(Image);
+            imageBitMap = imageLoad.loadImageFromStorage(Image);
             image.setImageBitmap(imageBitMap);
         }
 
@@ -72,22 +74,47 @@ public class BuyProduct extends AppCompatActivity {
     }
 
     public void SendRequestOrder(View view) {
+
+        new MaterialAlertDialogBuilder(BuyProduct.this)
+                .setTitle("Buy Product")
+                .setMessage("Are You Sure You want to Buy this Product ?")
+                .setPositiveButton("Accept", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        acceptOrder();
+                        Intent MainIntent = new Intent(getBaseContext(), MainActivity.class);
+                        startActivity(MainIntent);
+                        finish();
+
+                    }
+                })
+                .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                })
+                .show();
+
+
+    }
+
+    public void acceptOrder() {
+
         if (num >= 1) {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd ");
             String currentDate = sdf.format(new Date());
-            Toast.makeText(this, "currentDate is :"+currentDate, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "currentDate is :" + currentDate, Toast.LENGTH_SHORT).show();
 
 
             PurchaseTable purchaseTable = new PurchaseTable(this);
-            Purchase purchase = new Purchase(Id,currentDate,num);
-           boolean isSave= purchaseTable.insertPurchase(purchase);
-            Log.d("Save", "IsSave: "+isSave);
+            Purchase purchase = new Purchase(Id, currentDate, num);
+            boolean isSave = purchaseTable.insertPurchase(purchase);
+            Log.d("Save", "IsSave: " + isSave);
 
 
         } else {
             Toast.makeText(this, "You Can't buy 0 product", Toast.LENGTH_SHORT).show();
         }
-
-
     }
 }

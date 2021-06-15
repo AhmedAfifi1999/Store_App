@@ -43,14 +43,16 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         String installmentString = context.getString(R.string.installment);
         SaveImage image = new SaveImage();
         Bitmap imageBitMap;
-
         //--
         Product product = data.get(position);
-
-        if (product.getImage() != null || !product.getImage().isEmpty()) {
+        if (product.getImage() !="") {
             imageBitMap = image.loadImageFromStorage(product.getImage());
             //holder.productImage.setImageURI(Uri.parse(product.getImage()));
             holder.productImage.setImageBitmap(imageBitMap);
+        }else {
+            holder.productImage.setImageDrawable(context.getResources().getDrawable(R.drawable.ibytes));
+
+
         }
         holder.productTitle.setText(product.getTitle());
         holder.productPrice.setText(product.getPrice() + "");

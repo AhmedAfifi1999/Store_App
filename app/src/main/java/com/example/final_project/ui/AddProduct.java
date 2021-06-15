@@ -49,6 +49,7 @@ public class AddProduct extends AppCompatActivity {
     private static final int REQUEST_CODE = 100;
     Uri imageUri;
     OutputStream outputStream;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,7 +65,6 @@ public class AddProduct extends AppCompatActivity {
         Installment = findViewById(R.id.product_add_installment);
         Save = findViewById(R.id.product_add_save);
         productImage = findViewById(R.id.product_add_img);
-
         //TODO radiobutton get error when i change it [SOLVED]
         Save.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,22 +72,18 @@ public class AddProduct extends AppCompatActivity {
                 String product_title = ProductTitle.getText().toString();
                 double pPriceTemp = Double.parseDouble(ProductPrice.getText().toString());
                 double product_price = ProductPrice.getText().toString().equals("") ? 0.0 : pPriceTemp;
-
                 Toast.makeText(AddProduct.this, "pPriceTemp  : " + pPriceTemp, Toast.LENGTH_SHORT).show();
                 Log.d(TAG, "onClick: price :" + product_price);
                 Toast.makeText(AddProduct.this, "product_price  : " + product_price, Toast.LENGTH_SHORT).show();
-
                 //---
-
                 SaveImage saveImage = new SaveImage(AddProduct.this);
-                String path = saveImage.saveImageInStorage(image, "Products_Image", product_title + "_" + SystemClock.currentThreadTimeMillis());
-                Log.d("PATH", "path : " + path);
-
+                String path = "";
+                path = saveImage.saveImageInStorage(image, "Products_Image", product_title + "_" + SystemClock.currentThreadTimeMillis());
                 ///----
                 String product_description = ProductDescription.getText().toString();
                 boolean isCash = Cash.isChecked();
                 //TODO check if he insert using TextUtil
-                Product product = new Product(product_title, product_description, product_price,path, isCash);
+                Product product = new Product(product_title, product_description, product_price, path, isCash);
                 boolean isSuccess = db.insertProduct(product);
                 Toast.makeText(AddProduct.this, "this insert is " + isSuccess, Toast.LENGTH_SHORT).show();
                 long count = db.getProductCount();
@@ -96,7 +92,6 @@ public class AddProduct extends AppCompatActivity {
                 startActivity(Main);
             }
         });
-
     }
 
     @Override
@@ -111,40 +106,29 @@ public class AddProduct extends AppCompatActivity {
         Log.d(TAG, "onPause: ");
     }
 
-
     public void chooseImage(View view) {
-
         getPermission();
-
     }
 
     public void openGallery() {
         Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
         startActivityForResult(gallery, PICK_IMAGE);
-
-
     }
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK && requestCode == PICK_IMAGE) {
-            if (data != null) {
-                imageUri = data.getData();
-                //   signup_img.setImageURI(imageUri);
-                try {
-                    InputStream is = getContentResolver().openInputStream(imageUri);
-                    BitmapFactory.Options options = new BitmapFactory.Options();
-                    options.inPreferredConfig = Bitmap.Config.RGB_565;
-                    image = BitmapFactory.decodeStream(is, null, options);
-                    productImage.setImageBitmap(image);
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
-
+        if (resultCode == RESULT_OK && requestCode == PICK_IMAGE && data != null) {
+            imageUri = data.getData();
+            try {
+                InputStream is = getContentResolver().openInputStream(imageUri);
+                BitmapFactory.Options options = new BitmapFactory.Options();
+                options.inPreferredConfig = Bitmap.Config.RGB_565;
+                image = BitmapFactory.decodeStream(is, null, options);
+                productImage.setImageBitmap(image);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
             }
-
         }
     }
 
@@ -171,8 +155,6 @@ public class AddProduct extends AppCompatActivity {
             openGallery();
         }
     }
-
-
 
 
 }

@@ -1,5 +1,5 @@
-# Store_App
-Store  Android Application
+<p># Store_App</p>
+<h1>Store  Android Application</h1>
 
 you Can register and login as  local user 
 it saved in sharedPreferance
